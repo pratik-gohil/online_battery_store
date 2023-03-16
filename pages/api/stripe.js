@@ -8,15 +8,19 @@ export default async function handler(req, res) {
       const params = {
         submit_type: "pay",
         mode: "payment",
+        // invoice_creation: { enabled: true },
         payment_method_types: ["card"],
-        billing_address_collection: "auto",
+        billing_address_collection: "required",
         shipping_options: [{ shipping_rate: "shr_1MkjEQSF0ROC9HQIyFsd3Z3a" }],
+        shipping_address_collection: {
+          allowed_countries: ["IN"],
+        },
         line_items: req.body.map((item) => {
           const img = item.image[0].asset._ref;
           const newImage = img
             .replace(
               "image-",
-              "https://cdn.sanity.io/images/vfxfwnaw/production/"
+              "https://cdn.sanity.io/images/q9eegwt5/production/"
             )
             .replace("-webp", ".webp");
 
