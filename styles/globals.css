@@ -320,7 +320,7 @@ span.text-red {
 }
 
 .cart-container {
-  height: 100vh;
+  min-height: -webkit-fill-available;
   width: 600px;
   background-color: white;
   float: right;
