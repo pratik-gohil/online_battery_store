@@ -1,0 +1,58 @@
+.banner_wrapper {
+ background: #f7f8fa;
+}
+
+.search_form {
+ padding: 0 20px;
+ color: var(--secondary)
+}
+
+.search_form label {
+ line-height: 32px;
+ font-weight: 500;
+}
+
+.search_form select {
+ width: 100%;
+ border: 1px solid var(--secondary);
+ outline: none;
+ padding: 10px;
+}
+
+.icon {
+ background: url("/assets/icon-sprite.png");
+ width: 60px;
+ height: 48px;
+ margin: 0 auto;
+ margin-bottom: 14px;
+}
+
+.icon_free {
+ background-position: -322px -91px;
+}
+
+.icon_installation {
+ background-position: -27px -93px;
+}
+
+.icon_prices {
+ background-position: -89px -89px;
+}
+
+.icon_cash {
+ background-position: -163px -90px;
+}
+
+.icon_pay {
+ background-position: -241px -91px;
+}
+
+.banner_row {
+ display: flex;
+ justify-content: space-around;
+ padding: 30px 0;
+}
+
+.banner_row p {
+ color: #373b3e;
+}

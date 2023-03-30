@@ -6,21 +6,28 @@ import { Cart } from "./";
 import { useStateContext } from "../context/StateContext";
 
 const Navbar = () => {
-  const { showCart, setShowCart, totalQuantities } = useStateContext();
+  const { showCart, setShowCart, cartItems } = useStateContext();
 
   return (
     <div className="navbar-container">
-      <p className="logo">
-        <Link href="/">Shivsai Batteries</Link>
-      </p>
+      <div style={{ width: "100px" }}>
+        <Link href="/">
+          <img
+            src="/assets/logo.svg"
+            className="logo"
+            width={220}
+            height={100}
+          />
+        </Link>
+      </div>
 
       <button
         type="button"
         className="cart-icon"
         onClick={() => setShowCart(true)}
       >
-        <AiOutlineShopping />
-        <span className="cart-item-qty">{totalQuantities}</span>
+        <AiOutlineShopping color="white" />
+        <span className="cart-item-qty">{cartItems.length}</span>
       </button>
 
       {showCart && <Cart />}

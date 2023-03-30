@@ -17,7 +17,6 @@ const Cart = () => {
   const cartRef = useRef();
   const {
     totalPrice,
-    totalQuantities,
     cartItems,
     setShowCart,
     toggleCartItemQuanitity,
@@ -54,7 +53,7 @@ const Cart = () => {
         >
           <AiOutlineLeft />
           <span className="heading">Your Cart</span>
-          <span className="cart-num-items">({totalQuantities} items)</span>
+          <span className="cart-num-items">({cartItems.length} items)</span>
         </button>
 
         {cartItems.length < 1 && (
