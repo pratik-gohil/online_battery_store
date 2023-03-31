@@ -27,11 +27,6 @@ a {
   max-width: 1400px;
   margin: auto;
   width: 100%;
-
-}
-
-.layout {
-  /* padding: 10px; */
 }
 
 .navbar-container {
@@ -739,6 +734,10 @@ a {
     width: 300px;
     margin: auto;
   }
+
+  .about-section {
+    flex-direction: column;
+  }
 }
 
 .image-slide {
@@ -747,7 +746,7 @@ a {
 }
 
 .image-slide .slide {
-  max-width: 100%;
+  min-width: 100%;
 }
 
 .logo {
