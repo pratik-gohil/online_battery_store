@@ -21,7 +21,7 @@ const Navbar = () => {
             />
             <img
               className="logo-txt"
-              src="/assets/old_logo.svg"
+              src="/assets/logo_text.svg"
               width={220}
               height={100}
             />
