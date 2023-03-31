@@ -49,8 +49,15 @@
 
 .banner_row {
  display: flex;
+ flex-wrap: wrap;
  justify-content: space-around;
  padding: 30px 0;
+}
+
+@media screen and (max-width:800px) {
+ .banner_row {
+  gap: 20px 0;
+ }
 }
 
 .banner_row p {

@@ -10,14 +10,22 @@ const Navbar = () => {
 
   return (
     <div className="navbar-container">
-      <div style={{ width: "100px" }}>
+      <div>
         <Link href="/">
-          <img
-            src="/assets/logo.svg"
-            className="logo"
-            width={220}
-            height={100}
-          />
+          <div className="logo">
+            <img
+              className="logo-img"
+              src="/assets/logo.svg"
+              width={80}
+              height={80}
+            />
+            <img
+              className="logo-txt"
+              src="/assets/old_logo.svg"
+              width={220}
+              height={100}
+            />
+          </div>
         </Link>
       </div>
 
