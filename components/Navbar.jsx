@@ -21,6 +21,11 @@ const Navbar = () => {
   const auth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
+  useEffect(() => {
+    router.query.showcart = showCart;
+    router.push(router);
+  }, [showCart]);
+
   const handleLogin = () => {
     signInWithPopup(
       auth,
@@ -61,7 +66,7 @@ const Navbar = () => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    setShowCart(!!router.query.cartopen);
+    setShowCart(!!router.query.showcart);
   }, [router.isReady]);
 
   return (
@@ -100,7 +105,7 @@ const Navbar = () => {
             className="user-img"
             loading="lazy"
             src={user.image}
-            referrerpolicy="no-referrer"
+            referrerPolicy="no-referrer"
           />
         ) : (
           <div className="login-btn" onClick={handleLogin}>
