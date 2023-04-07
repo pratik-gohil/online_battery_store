@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { BsBagCheckFill } from "react-icons/bs";
 
@@ -9,7 +9,7 @@ const Success = () => {
   const { setCartItems, setTotalPrice } = useStateContext();
 
   useEffect(() => {
-    localStorage.clear();
+    localStorage.removeItem("cart-items");
     setCartItems([]);
     setTotalPrice(0);
     runFireworks();

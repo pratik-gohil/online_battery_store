@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
-  const [showCart, setShowCart] = useState(false);
+  const [showCart, setShowCart] = useState();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [qty, setQty] = useState(1);
@@ -19,6 +19,13 @@ export const StateContext = ({ children }) => {
 
   useEffect(() => {
     localStorage.setItem("cart-items", JSON.stringify(cartItems));
+
+    setTotalPrice(
+      cartItems.reduce(
+        (total, product) => (total += product.price * product.quantity),
+        0
+      )
+    );
   }, [cartItems]);
 
   let foundProduct;
@@ -27,10 +34,6 @@ export const StateContext = ({ children }) => {
   const onAdd = (product, quantity) => {
     const checkProductInCart = cartItems.find(
       (item) => item._id === product._id
-    );
-
-    setTotalPrice(
-      (prevTotalPrice) => prevTotalPrice + product.price * quantity
     );
 
     if (checkProductInCart) {
@@ -56,10 +59,6 @@ export const StateContext = ({ children }) => {
     foundProduct = cartItems.find((item) => item._id === product._id);
     const newCartItems = cartItems.filter((item) => item._id !== product._id);
 
-    setTotalPrice(
-      (prevTotalPrice) =>
-        prevTotalPrice - foundProduct.price * foundProduct.quantity
-    );
     setCartItems(newCartItems);
   };
 
@@ -73,14 +72,12 @@ export const StateContext = ({ children }) => {
         ...newCartItems,
         { ...foundProduct, quantity: foundProduct.quantity + 1 },
       ]);
-      setTotalPrice((prevTotalPrice) => prevTotalPrice + foundProduct.price);
     } else if (value === "dec") {
       if (foundProduct.quantity > 1) {
         setCartItems([
           ...newCartItems,
           { ...foundProduct, quantity: foundProduct.quantity - 1 },
         ]);
-        setTotalPrice((prevTotalPrice) => prevTotalPrice - foundProduct.price);
       }
     }
   };

@@ -32,9 +32,34 @@ a {
 .navbar-container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 18px;
   position: relative;
   background: var(--secondary);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  height: 100%;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  text-transform: uppercase;
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  transform: scale(1, 1);
+  transition: transform 0.5s ease;
+}
+
+.user-img {
+  width: 40px;
+  border-radius: 100%;
 }
 
 .marquee {
@@ -538,15 +563,12 @@ a {
 .success-wrapper,
 .cancel-wrapper {
   background-color: white;
-  min-height: 60vh;
-
 }
 
 .success,
 .cancel {
   width: 1000px;
-  margin: auto;
-  margin-top: 160px;
+  margin: 100px auto;
   background-color: #dcdcdc;
   padding: 50px;
   border-radius: 15px;
