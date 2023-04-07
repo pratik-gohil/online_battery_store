@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
   AiOutlineMinus,
@@ -12,8 +12,11 @@ import toast from "react-hot-toast";
 import { useStateContext } from "../context/StateContext";
 import { urlFor } from "../lib/client";
 import getStripe from "../lib/getStripe";
+import { useRouter } from "next/router";
 
 const Cart = () => {
+  const router = useRouter();
+  const [user, setUser] = useState();
   const cartRef = useRef();
   const {
     totalPrice,
@@ -23,7 +26,19 @@ const Cart = () => {
     onRemove,
   } = useStateContext();
 
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("user")));
+
+    window.addEventListener("user-change", () => {
+      setUser(JSON.parse(localStorage.getItem("user")));
+    });
+  }, []);
+
   const handleCheckout = async () => {
+    if (!user) {
+      router.push("/login");
+      return;
+    }
     const stripe = await getStripe();
 
     const response = await fetch("/api/stripe", {
@@ -60,15 +75,13 @@ const Cart = () => {
           <div className="empty-cart">
             <AiOutlineShopping size={150} />
             <h3>Your shopping bag is empty</h3>
-            <Link href="/">
-              <button
-                type="button"
-                onClick={() => setShowCart(false)}
-                className="btn"
-              >
-                Continue Shopping
-              </button>
-            </Link>
+            <button
+              type="button"
+              onClick={() => setShowCart(false)}
+              className="btn"
+            >
+              Continue Shopping
+            </button>
           </div>
         )}
 
@@ -96,9 +109,7 @@ const Cart = () => {
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num" onClick="">
-                          {item.quantity}
-                        </span>
+                        <span className="num">{item.quantity}</span>
                         <span
                           className="plus"
                           onClick={() =>
