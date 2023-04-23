@@ -15,7 +15,8 @@ export default async function handler(req, res) {
         shipping_address_collection: {
           allowed_countries: ["IN"],
         },
-        line_items: req.body.map((item) => {
+        client_reference_id: req.body.uid,
+        line_items: req.body.cartItems.map((item) => {
           const img = item.image[0].asset._ref;
           const newImage = img
             .replace(
@@ -41,7 +42,7 @@ export default async function handler(req, res) {
           };
         }),
         success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${req.headers.origin}/?showcart=true`,
+        cancel_url: `${req.headers.origin}/`,
       };
 
       // Create Checkout Sessions from body params.

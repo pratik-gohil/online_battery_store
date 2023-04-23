@@ -40,7 +40,7 @@ const Cart = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cartItems),
+      body: JSON.stringify({ cartItems, uid: user._id }),
     });
 
     if (response.statusCode === 500) return;
@@ -144,7 +144,11 @@ const Cart = () => {
               <h3>₹{totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handlePay}>
+              <button
+                type="button"
+                className="btn btn-full"
+                onClick={handlePay}
+              >
                 Pay with Stripe
               </button>
             </div>
