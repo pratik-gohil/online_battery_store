@@ -64,7 +64,7 @@ const Home = ({ products, bannerData }) => {
         <i>The powerful battery range for the long-lasting performance</i>
       </div>
 
-      <div className="products-container">
+      <div className="products-container center">
         {products?.map((product) => (
           <Product key={product._id} product={product} />
         ))}

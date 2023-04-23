@@ -7,6 +7,29 @@ import BannerCss from "../styles/Banner.module.css";
 
 import modelsJSON from "../public/json/models.json";
 
+export const getCityByState = (state) => {
+  switch (state) {
+    case "Maharashtra":
+      return (
+        <>
+          <option value="Mumbai">Mumbai</option>
+          <option value="Pune">Pune</option>
+          <option value="Thane">Thane</option>
+          <option value="Nashik">Nashik</option>
+          <option value="Navi Mumbai">Navi Mumbai</option>
+          <option value="Kalyan">Kalyan</option>
+          <option value="Virar">Virar</option>
+          <option value="Lonavala">Lonavala</option>
+          <option value="Dombivali">Dombivali</option>
+          <option value="Nagpur">Nagpur</option>
+          <option value="Barmati">Baramati</option>
+          <option value="Kolhapur">Kolhapur</option>
+          <option value="Uran">Uran</option>
+        </>
+      );
+  }
+};
+
 const Banner = ({ bannerData }) => {
   const [make, setMake] = useState(null);
   const [models, setModels] = useState(null);
@@ -20,38 +43,11 @@ const Banner = ({ bannerData }) => {
     setModels(modelsJSON[make]);
   }, [make]);
 
-  const handleFind = () => {
-    console.log();
-  };
-
-  const getCityByState = () => {
-    switch (state) {
-      case "Maharashtra":
-        return (
-          <>
-            <option value="Mumbai">Mumbai</option>
-            <option value="Pune">Pune</option>
-            <option value="Thane">Thane</option>
-            <option value="Nashik">Nashik</option>
-            <option value="Navi Mumbai">Navi Mumbai</option>
-            <option value="Kalyan">Kalyan</option>
-            <option value="Virar">Virar</option>
-            <option value="Lonavala">Lonavala</option>
-            <option value="Dombivali">Dombivali</option>
-            <option value="Nagpur">Nagpur</option>
-            <option value="Barmati">Baramati</option>
-            <option value="Kolhapur">Kolhapur</option>
-            <option value="Uran">Uran</option>
-          </>
-        );
-    }
-  };
-
   return (
     <div className={BannerCss.banner_wrapper}>
       <div className="banner-container">
         <ImageSlide images={images} />
-        <form className={BannerCss.search_form} onSubmit={handleFind}>
+        <form className={BannerCss.search_form} action="/car-batteries">
           <div>
             <label>Car Make *</label>
             <select
@@ -98,14 +94,14 @@ const Banner = ({ bannerData }) => {
               onChange={(e) => setBrand(e.target.value)}
             >
               <option value="">All Brand</option>
-              <option value="2">Amaron</option>
-              <option value="1">Exide </option>
-              <option value="144">PowerZONE</option>
-              <option value="202">SF Sonic</option>
-              <option value="145">Dynex (Manufacturing by Exide Ind)</option>
-              <option value="24">AC Delco</option>
-              <option value="219">BOSCH</option>
-              <option value="125">Livfast</option>
+              <option value="amaron">Amaron</option>
+              <option value="exide">Exide </option>
+              <option value="power-zone">PowerZONE</option>
+              <option value="sf-sonic">SF Sonic</option>
+              <option value="dynex">Dynex (Manufacturing by Exide Ind)</option>
+              <option value="ac-delco">AC Delco</option>
+              <option value="bosch">BOSCH</option>
+              <option value="livfast">Livfast</option>
             </select>
           </div>
           <div>
@@ -143,7 +139,7 @@ const Banner = ({ bannerData }) => {
               required
             >
               <option value="">Select City</option>
-              {getCityByState()}
+              {getCityByState(state)}
             </select>
           </div>
           <button type="submit" id="search-battery" className="btn btn-full">
