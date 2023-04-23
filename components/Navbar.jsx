@@ -6,54 +6,17 @@ import { Cart } from "./";
 import { useStateContext } from "../context/StateContext";
 import { useRouter } from "next/router";
 
-import {
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signOut,
-} from "firebase/auth";
-import { app } from "../fireabase.config";
+import handleLogin from "../lib/login";
 
 const Navbar = () => {
   const router = useRouter();
   const [user, setUser] = useState();
   const { showCart, setShowCart, cartItems } = useStateContext();
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
 
   useEffect(() => {
     router.query.showcart = showCart;
     router.push(router);
   }, [showCart]);
-
-  const handleLogin = () => {
-    signInWithPopup(
-      auth,
-      provider.setCustomParameters({ prompt: "select_account" })
-    )
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-
-        localStorage.setItem(
-          "user",
-          JSON.stringify({
-            _id: user.uid,
-            name: user.displayName,
-            email: user.email,
-            image: user.photoURL,
-          })
-        );
-        window.dispatchEvent(new Event("user-change"));
-        setTimeout(() => {
-          router.push("/");
-        }, 1500);
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        console.log(error);
-      });
-  };
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));

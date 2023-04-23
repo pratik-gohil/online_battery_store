@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -12,10 +11,9 @@ import toast from "react-hot-toast";
 import { useStateContext } from "../context/StateContext";
 import { urlFor } from "../lib/client";
 import getStripe from "../lib/getStripe";
-import { useRouter } from "next/router";
+import handleLogin from "../lib/login";
 
 const Cart = () => {
-  const router = useRouter();
   const [user, setUser] = useState();
   const cartRef = useRef();
   const {
@@ -36,7 +34,7 @@ const Cart = () => {
 
   const handleCheckout = async () => {
     if (!user) {
-      router.push("/login");
+      handleLogin();
       return;
     }
     const stripe = await getStripe();
