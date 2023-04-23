@@ -146,7 +146,7 @@ const Banner = ({ bannerData }) => {
               {getCityByState()}
             </select>
           </div>
-          <button type="submit" id="search-battery" className="btn">
+          <button type="submit" id="search-battery" className="btn btn-full">
             Find
           </button>
         </form>

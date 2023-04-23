@@ -33,10 +33,6 @@ const Cart = () => {
   }, []);
 
   const handleCheckout = async () => {
-    if (!user) {
-      handleLogin();
-      return;
-    }
     const stripe = await getStripe();
 
     const response = await fetch("/api/stripe", {
@@ -54,6 +50,17 @@ const Cart = () => {
     toast.loading("Redirecting...");
 
     stripe.redirectToCheckout({ sessionId: data.id });
+  };
+
+  const handlePay = async () => {
+    if (!user) {
+      handleLogin().then((res) => {
+        if (res) {
+          handleCheckout();
+        }
+      });
+    }
+    handleCheckout();
   };
 
   return (
@@ -137,7 +144,7 @@ const Cart = () => {
               <h3>₹{totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="btn" onClick={handleCheckout}>
+              <button type="button" className="btn" onClick={handlePay}>
                 Pay with Stripe
               </button>
             </div>

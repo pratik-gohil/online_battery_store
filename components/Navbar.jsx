@@ -4,19 +4,25 @@ import { AiOutlineShopping } from "react-icons/ai";
 
 import { Cart } from "./";
 import { useStateContext } from "../context/StateContext";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 import handleLogin from "../lib/login";
 
 const Navbar = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const [user, setUser] = useState();
   const { showCart, setShowCart, cartItems } = useStateContext();
 
-  useEffect(() => {
-    router.query.showcart = showCart;
-    router.push(router);
-  }, [showCart]);
+  // useEffect(() => {
+  //   router.query.showcart = showCart;
+  //   router.push(router);
+  // }, [showCart]);
+
+  // useEffect(() => {
+  //   if (!router.isReady) return;
+
+  //   setShowCart(!!router.query.showcart);
+  // }, [router.isReady]);
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("user")));
@@ -25,12 +31,6 @@ const Navbar = () => {
       setUser(JSON.parse(localStorage.getItem("user")));
     });
   }, []);
-
-  useEffect(() => {
-    if (!router.isReady) return;
-
-    setShowCart(!!router.query.showcart);
-  }, [router.isReady]);
 
   return (
     <div className="navbar-container">
