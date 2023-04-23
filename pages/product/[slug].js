@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -6,14 +6,22 @@ import {
   AiOutlineStar,
 } from "react-icons/ai";
 
+import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+
 import { client, urlFor } from "../../lib/client";
 import { Product } from "../../components";
 import { useStateContext } from "../../context/StateContext";
 
 const ProductDetails = ({ product, products }) => {
-  const { image, name, details, price } = product;
+  const { image, name, details, price, rating: ratings } = product;
+  const [rating, setRating] = useState(0);
+  const totalStars = 5;
   const [index, setIndex] = useState(0);
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
+
+  useEffect(() => {
+    setRating((ratings.reduce((a, r) => a + r, 0) / 3).toFixed(2));
+  }, [ratings]);
 
   const handleBuyNow = () => {
     onAdd(product, qty);
@@ -49,13 +57,21 @@ const ProductDetails = ({ product, products }) => {
           <h1>{name}</h1>
           <div className="reviews">
             <div>
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiOutlineStar />
+              {[...new Array(totalStars)].map((_, i) => {
+                return (
+                  <span>
+                    {i + 1 <= rating ? (
+                      <BsStarFill />
+                    ) : rating < i + 1 && rating > i ? (
+                      <BsStarHalf />
+                    ) : (
+                      <BsStar />
+                    )}
+                  </span>
+                );
+              })}
             </div>
-            <p>(20)</p>
+            <p>({ratings.length})</p>
           </div>
           <h4>Details: </h4>
           <p>{details}</p>

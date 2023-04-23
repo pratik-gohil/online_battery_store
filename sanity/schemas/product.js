@@ -19,6 +19,22 @@ export default {
       of: [{ type: "string" }],
     },
     {
+      name: "rating",
+      title: "Rating",
+      type: "array",
+      description: "Rating Should be between 0 and 5",
+      of: [
+        {
+          type: "number",
+          validation: (Rule) =>
+            Rule.required()
+              .min(0)
+              .max(5)
+              .warning("Rating Should be between 0 and 5"),
+        },
+      ],
+    },
+    {
       name: "brand",
       title: "Brand",
       type: "string",
