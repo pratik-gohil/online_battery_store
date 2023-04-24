@@ -18,20 +18,17 @@ export const config = {
 
 async function webhookHandler(req, res) {
   if (req.method === "POST") {
+    const buf = await buffer(req);
+    const sig = req.headers["stripe-signature"];
+    const webhookSecret = process.env.NEXT_PUBLIC_WEB_HOOK_SECRET;
+
     let event;
 
     try {
-      const whSec = process.env.NEXT_PUBLIC_WEB_HOOK_SECRET;
-      const buf = await buffer(req);
-
-      event = stripe.webhooks.constructEvent(
-        buf,
-        req.headers["stripe-signature"],
-        whSec
-      );
+      event = stripe.webhooks.constructEvent(buf, sig, webhookSecret);
     } catch (err) {
       console.error("⚠️ Webhook signature verification failed.", err.message);
-      // res.status(400).send(`Webhook Error: ${err.message}`);
+      res.status(400).send(`Webhook Error: ${err.message}`);
       return;
     }
 
@@ -40,7 +37,7 @@ async function webhookHandler(req, res) {
         const session = event.data.object;
         const uid = session.client_reference_id;
 
-        await addDoc(collection(db, "orders"), {
+        addDoc(collection(db, "orders"), {
           checkoutSessionId: session.id,
           shippingInfo: session.shipping,
           amountTotal: session.amount_total,
@@ -49,17 +46,6 @@ async function webhookHandler(req, res) {
         });
       }
     }
-
-    // const res = await stripe.checkout.sessions.retrieve();
-    //   event.data.object.id
-    //   {
-    //     expand: ["line_items"],
-    //   }
-    // );
-
-    // console.log(res);
-
-    res.status(200).end();
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
