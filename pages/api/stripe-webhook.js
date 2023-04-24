@@ -4,13 +4,19 @@ const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY);
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../fireabase.config";
 
+import Cors from "micro-cors";
+
+const cors = Cors({
+  allowMethods: ["POST", "HEAD"],
+});
+
 export const config = {
   api: {
     bodyParser: false,
   },
 };
 
-export default async function handler(req, res) {
+async function webhookHandler(req, res) {
   if (req.method === "POST") {
     let event;
 
@@ -59,3 +65,5 @@ export default async function handler(req, res) {
     res.status(405).end("Method Not Allowed");
   }
 }
+
+export default cors(webhookHandler);
