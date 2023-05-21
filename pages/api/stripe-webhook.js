@@ -31,8 +31,7 @@ async function webhookHandler(req, res) {
       );
     } catch (err) {
       console.error("⚠️ Webhook signature verification failed.", err.message);
-      res.status(400).send(`Webhook Error: ${err.message}`);
-      return;
+      return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     switch (event.type) {
@@ -49,6 +48,8 @@ async function webhookHandler(req, res) {
         });
       }
     }
+
+    res.status(200).json({ received: true });
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
