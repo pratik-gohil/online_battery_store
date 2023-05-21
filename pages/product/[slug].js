@@ -59,7 +59,7 @@ const ProductDetails = ({ product, products }) => {
             <div>
               {[...new Array(totalStars)].map((_, i) => {
                 return (
-                  <span>
+                  <span key={i}>
                     {i + 1 <= rating ? (
                       <BsStarFill />
                     ) : rating < i + 1 && rating > i ? (

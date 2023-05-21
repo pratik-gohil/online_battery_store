@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   AiOutlineMinus,
   AiOutlinePlus,
@@ -32,7 +32,7 @@ const Cart = () => {
     });
   }, []);
 
-  const handleCheckout = async () => {
+  const handleCheckout = useCallback(async () => {
     const stripe = await getStripe();
 
     const response = await fetch("/api/stripe", {
@@ -50,17 +50,19 @@ const Cart = () => {
     toast.loading("Redirecting...");
 
     stripe.redirectToCheckout({ sessionId: data.id });
-  };
+  }, [user]);
 
   const handlePay = async () => {
     if (!user) {
       handleLogin().then((res) => {
+        console.log(res);
         if (res) {
           handleCheckout();
         }
       });
+    } else {
+      handleCheckout();
     }
-    handleCheckout();
   };
 
   return (

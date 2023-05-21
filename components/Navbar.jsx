@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { AiOutlineShopping } from "react-icons/ai";
+import {
+  AiOutlineLogout,
+  AiOutlineShopping,
+  AiOutlineUser,
+} from "react-icons/ai";
 
 import { Cart } from "./";
 import { useStateContext } from "../context/StateContext";
 // import { useRouter } from "next/router";
 
 import handleLogin from "../lib/login";
+import usePopup from "../hooks/usePopup";
 
 const Navbar = () => {
   // const router = useRouter();
   const [user, setUser] = useState();
   const { showCart, setShowCart, cartItems } = useStateContext();
+  const profileImageRef = useRef();
+  const profilePopupRef = useRef();
+  const [showPopup] = usePopup(profilePopupRef, profileImageRef, [user]);
 
   // useEffect(() => {
   //   router.query.showcart = showCart;
@@ -64,12 +72,36 @@ const Navbar = () => {
         </button>
 
         {user ? (
-          <img
-            className="user-img"
-            loading="lazy"
-            src={user.image}
-            referrerPolicy="no-referrer"
-          />
+          <>
+            <img
+              className="user-img"
+              loading="lazy"
+              src={user.image}
+              referrerPolicy="no-referrer"
+              ref={profileImageRef}
+            />
+            <div
+              ref={profilePopupRef}
+              className={`popup ${showPopup ? "show" : "hide"}`}
+            >
+              <Link href="/profile">
+                <a className="nav-popuop-link">
+                  <span className="icon">
+                    <AiOutlineUser />
+                  </span>
+                  <span className="text">Profile</span>
+                </a>
+              </Link>
+              <Link href="/logout">
+                <a className="nav-popuop-link">
+                  <span className="icon">
+                    <AiOutlineLogout />
+                  </span>
+                  <span className="text">Logout</span>
+                </a>
+              </Link>
+            </div>
+          </>
         ) : (
           <div className="login-btn" onClick={handleLogin}>
             LOGIN
