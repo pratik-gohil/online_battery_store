@@ -460,12 +460,26 @@ a {
   color: var(--primary);
 }
 
-.price .old-price,
+.with-battery-options {
+  margin-top: 15px;
+}
+
+.with-battery-options span {
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.old-price span {
+  text-decoration: line-through;
+}
+
+/* .price .old-price,
 .product-price .old-price,
 .price .old-price {
   color: gray;
   text-decoration: line-through;
-}
+} */
 
 .product-detail-desc .quantity {
   display: flex;
@@ -959,7 +973,7 @@ a {
 .profile-container {
   padding: 40px;
   display: flex;
-  gap: 10px;
+  gap: 40px;
 }
 
 .profile-section {

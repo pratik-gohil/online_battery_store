@@ -11,20 +11,43 @@ import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
 import { client, urlFor } from "../../lib/client";
 import { Product } from "../../components";
 import { useStateContext } from "../../context/StateContext";
+import { calculateDiscount } from "../../lib/calculateDiscount";
 
 const ProductDetails = ({ product, products }) => {
-  const { image, name, details, price, rating: ratings } = product;
+  const {
+    image,
+    name,
+    details,
+    price,
+    rating: ratings,
+    discount,
+    capacity,
+  } = product;
   const [rating, setRating] = useState(0);
   const totalStars = 5;
   const [index, setIndex] = useState(0);
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
+  const [hasOldBattery, setHasOldBattery] = useState(false);
 
   useEffect(() => {
     setRating((ratings.reduce((a, r) => a + r, 0) / 3).toFixed(2));
   }, [ratings]);
 
+  const handleAdd = () => {
+    onAdd(
+      {
+        ...product,
+        price: calculateDiscount(
+          price,
+          discount[hasOldBattery ? "with_old_battery" : "without_old_battery"]
+        ).discount,
+      },
+      qty
+    );
+  };
+
   const handleBuyNow = () => {
-    onAdd(product, qty);
+    handleAdd();
 
     setShowCart(true);
   };
@@ -75,7 +98,65 @@ const ProductDetails = ({ product, products }) => {
           </div>
           <h4>Details: </h4>
           <p>{details}</p>
-          <p className="price">₹{price}</p>
+          <p>
+            <span className="price">
+              ₹
+              {
+                calculateDiscount(
+                  price,
+                  discount[
+                    hasOldBattery ? "with_old_battery" : "without_old_battery"
+                  ]
+                ).discount
+              }
+            </span>
+            <br />
+            <span className="old-price">
+              Old Price: <span>₹{price}</span>
+            </span>
+            <br />
+            <span>
+              Save: ₹
+              {
+                calculateDiscount(
+                  price,
+                  discount[
+                    hasOldBattery ? "with_old_battery" : "without_old_battery"
+                  ]
+                ).save
+              }{" "}
+              (
+              {
+                discount[
+                  hasOldBattery ? "with_old_battery" : "without_old_battery"
+                ]
+              }
+              %)
+            </span>
+          </p>
+          <div className="with-battery-options">
+            <span>Capacity: {capacity}AH</span>
+            <br />
+            <label>
+              <input
+                type="radio"
+                name="with-battery"
+                checked={hasOldBattery}
+                onChange={() => setHasOldBattery(true)}
+              />{" "}
+              With Old Battery(same AH)
+            </label>
+            <br />
+            <label>
+              <input
+                type="radio"
+                name="with-battery"
+                checked={!hasOldBattery}
+                onChange={() => setHasOldBattery(false)}
+              />{" "}
+              Without Old Battery
+            </label>
+          </div>
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc">
@@ -92,7 +173,7 @@ const ProductDetails = ({ product, products }) => {
             <button
               type="button"
               className="add-to-cart"
-              onClick={() => onAdd(product, qty)}
+              onClick={() => handleAdd()}
             >
               Add to Cart
             </button>

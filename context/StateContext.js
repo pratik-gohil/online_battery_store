@@ -41,6 +41,7 @@ export const StateContext = ({ children }) => {
         if (cartProduct._id === product._id)
           return {
             ...cartProduct,
+            price: product.price,
             quantity: cartProduct.quantity + quantity,
           };
       });

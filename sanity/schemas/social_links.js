@@ -1,28 +1,43 @@
 export default {
-  name: "social_links",
-  title: "Social Links",
+  name: "footer",
+  title: "Footer Content",
   type: "document",
-  to: [{ type: "post" }],
   fields: [
     {
-      title: "Twitter",
-      name: "twitter",
-      type: "string",
-    },
-    {
-      title: "Instagram",
-      name: "instagram",
-      type: "string",
-    },
-    {
-      title: "Facebook",
-      name: "facebook",
-      type: "string",
-    },
-    {
-      title: "Whatsapp Number",
-      name: "whatsapp_number",
-      type: "number",
+      name: "socialLinks",
+      title: "Social Links",
+      type: "object",
+      fields: [
+        {
+          name: "facebook",
+          title: "Facebook",
+          type: "url",
+        },
+        {
+          name: "twitter",
+          title: "Twitter",
+          type: "url",
+        },
+        {
+          name: "instagram",
+          title: "Instagram",
+          type: "url",
+        },
+        {
+          name: "linkedin",
+          title: "LinkedIn",
+          type: "url",
+        },
+        {
+          title: "Whatsapp Number",
+          name: "whatsapp_number",
+          type: "string",
+          validation: (Rule) =>
+            Rule.regex(/^\+?[0-9]{6,}$/).error(
+              "Please enter a valid phone number."
+            ),
+        },
+      ],
     },
   ],
 };

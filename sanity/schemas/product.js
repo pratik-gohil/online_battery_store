@@ -63,5 +63,27 @@ export default {
       title: "Details",
       type: "string",
     },
+    {
+      name: "capacity",
+      title: "Capacity",
+      type: "number",
+    },
+    {
+      name: "discount",
+      type: "object",
+      fields: [
+        {
+          name: "with_old_battery",
+          type: "number",
+          title: "With Old Battery",
+        },
+        {
+          name: "without_old_battery",
+          type: "number",
+          title: "Without Old Battery",
+        },
+      ],
+      validation: (Rule) => Rule.required(),
+    },
   ],
 };
