@@ -27,8 +27,6 @@ function CarBatteries() {
       const searchQuery = `*[_type == 'product' && name match '${queryBrand}' && '${queryMake}' in compatible_models]`;
       const searchResult = await client.fetch(searchQuery);
 
-      console.log(searchQuery);
-      console.log(searchResult);
       setBatteries(searchResult);
     }
   }, [router.isReady]);

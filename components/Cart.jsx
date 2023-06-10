@@ -55,7 +55,6 @@ const Cart = () => {
   const handlePay = async () => {
     if (!user) {
       handleLogin().then((res) => {
-        console.log(res);
         if (res) {
           handleCheckout();
         }

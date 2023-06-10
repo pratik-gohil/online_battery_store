@@ -33,17 +33,21 @@ async function webhookHandler(req, res) {
       console.error("⚠️ Webhook signature verification failed.", err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
-
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object;
         const uid = session.client_reference_id;
 
-        addDoc(collection(db, "orders"), {
+        const lineItems = await stripe.checkout.sessions.listLineItems(
+          session.id
+        );
+
+        await addDoc(collection(db, "orders"), {
           checkoutSessionId: session.id,
           shippingInfo: session.shipping,
           amountTotal: session.amount_total,
           paymentStatus: session.payment_status,
+          products: lineItems.data,
           uid,
         });
       }

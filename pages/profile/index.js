@@ -5,7 +5,6 @@ import Link from "next/link";
 import ProfileOverview from "../../components/Profile/ProfileOverview";
 
 function ProfileLeftSidebar({ section }) {
-  console.log(section);
   const links = [
     { query: "overview", text: "Overview" },
     { query: "orders", text: "Orders" },

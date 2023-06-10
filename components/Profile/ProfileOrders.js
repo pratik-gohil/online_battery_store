@@ -22,15 +22,20 @@ function ProfileOrders() {
     }
   }, [user]);
 
-  // console.log(orders);
-
   return (
     <div>
-      {/* {orders.map((order) => {
-        <h1>Order</h1>;
-        // order
-      })} */}
-      orders
+      <h1>orders</h1>
+      {orders &&
+        orders.map((order) => (
+          <div key={order.checkoutSessionId}>
+            <p className="price">{order.amountTotal}</p>
+            {order.products.map((product) => (
+              <div key={product.id}>
+                <p>{product.description}</p>
+              </div>
+            ))}
+          </div>
+        ))}
     </div>
   );
 }
